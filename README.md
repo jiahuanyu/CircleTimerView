@@ -21,7 +21,7 @@ Developed by AndroidStudio
 Ensure the height equals to the width
 
 ## Notice
-If you make the targetSdkVersion greater than or equal to 14, please add the following code in the end of the `initialize` method
+If you make the targetSdkVersion greater than or equal to 14, please add the following code in the end of the `initialize` method. This code is to solve the problem that no shadow in higher targetSdkVersion
 ```java
 setLayerType(View.LAYER_TYPE_SOFTWARE, null);
 ```
