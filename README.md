@@ -19,6 +19,12 @@ Developed by AndroidStudio
 ```
 Ensure the height equals to the width
 
+## Notice
+If you make the targetSdkVersion greater than or equal to 14, please add the following code in the end of the `initialize` method
+```java
+setLayerType(View.LAYER_TYPE_SOFTWARE, null);
+```
+
 ## License
 Copyright 2015 JiaHuan
 
