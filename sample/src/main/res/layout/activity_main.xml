@@ -1,0 +1,13 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+    >
+
+    <com.jiahuan.circletimerview.CircleTimerView
+        android:id="@+id/ctv"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:layout_centerInParent="true">
+    </com.jiahuan.circletimerview.CircleTimerView>
+
+</RelativeLayout>
