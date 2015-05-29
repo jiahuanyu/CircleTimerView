@@ -10,4 +10,18 @@
         android:layout_centerInParent="true">
     </com.jiahuan.circletimerview.CircleTimerView>
 
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="开始Timer"
+        android:onClick="start"/>
+
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:text="关闭Timer"
+        android:onClick="stop"/>
 </RelativeLayout>

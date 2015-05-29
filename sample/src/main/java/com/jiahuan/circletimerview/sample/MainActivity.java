@@ -4,16 +4,22 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+
+import com.jiahuan.circletimerview.CircleTimerView;
 
 
 public class MainActivity extends ActionBarActivity
 {
+
+    CircleTimerView timer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        timer = (CircleTimerView) findViewById(R.id.ctv);
     }
 
     @Override
@@ -39,5 +45,15 @@ public class MainActivity extends ActionBarActivity
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void start(View v)
+    {
+        timer.startTimer();
+    }
+
+    public void stop(View v)
+    {
+        timer.stopTimer();
     }
 }
