@@ -2,6 +2,12 @@
 Circle timer on Android platform. <br />
 <img src="./images/sample.gif" width="200px" height="auto" />
 
+## System Requirement
+Android v2.2+
+
+## TODO
+Developed by AndroidStudio
+
 ## Usage
 ```xml
 <com.jiahuan.circletimerview.CircleTimerView
