@@ -6,8 +6,8 @@ android {
 
     defaultConfig {
         applicationId "com.jiahuan.circletimerview.sample"
-        minSdkVersion 10
-        targetSdkVersion 22
+        minSdkVersion 8
+        targetSdkVersion 8
         versionCode 1
         versionName "1.0"
     }
