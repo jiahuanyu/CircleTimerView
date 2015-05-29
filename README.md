@@ -11,7 +11,7 @@ Circle timer on Android platform. <br />
     android:layout_centerInParent="true">
 </com.jiahuan.circletimerview.CircleTimerView>
 ```
-Ecsure the height equal to the width
+Ensure the height equals to the width
 
 ## License
 Copyright 2015 JiaHuan
