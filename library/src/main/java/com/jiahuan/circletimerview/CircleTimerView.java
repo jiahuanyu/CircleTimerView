@@ -110,18 +110,26 @@ public class CircleTimerView extends View
         {
             Log.d(TAG, "handleMessage");
             super.handleMessage(msg);
-            if (currentRadian > 0)
+            if (currentRadian > 0 && currentTime > 0)
             {
                 currentRadian -= (2 * Math.PI) / 3600;
-                invalidate();
             }
             else
             {
                 currentRadian = 0;
                 timer.cancel();
+                isStartTimer = false;
+                if (circleTimerListener != null)
+                {
+                    circleTimerListener.onTimerStop();
+                }
             }
+            invalidate();
         }
     };
+
+    // Runt
+    private CircleTimerListener circleTimerListener;
 
     public CircleTimerView(Context context, AttributeSet attrs, int defStyleAttr)
     {
@@ -452,16 +460,39 @@ public class CircleTimerView extends View
             };
             timer.schedule(timerTask, 1000, 1000);
             isStartTimer = true;
+            if (this.circleTimerListener != null)
+            {
+                this.circleTimerListener.onTimerStart();
+            }
         }
     }
 
-    // Stop timer
-    public void stopTimer()
+    // Pause timer
+    public void pauseTimer()
     {
         if (isStartTimer)
         {
             timerTask.cancel();
             isStartTimer = false;
+            if (this.circleTimerListener != null)
+            {
+                this.circleTimerListener.onTimerPause();
+            }
         }
+    }
+
+    // Set timer listener
+    public void setCircleTimerListener(CircleTimerListener circleTimerListener)
+    {
+        this.circleTimerListener = circleTimerListener;
+    }
+
+    public interface CircleTimerListener
+    {
+        void onTimerStop();
+
+        void onTimerStart();
+
+        void onTimerPause();
     }
 }
