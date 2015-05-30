@@ -16,12 +16,17 @@
         android:layout_height="wrap_content"
         android:text="START TIMER"
         android:onClick="start"/>
-
-
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:text="STOP TIMER"
-        android:onClick="stop"/>
+        android:layout_centerHorizontal="true"
+        android:text="PAUSE TIMER"
+        android:onClick="pause"/>
+
+    <!--<Button-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_alignParentRight="true"-->
+        <!--android:text="STOP TIMER"-->
+        <!--android:onClick="stop"/>-->
 </RelativeLayout>

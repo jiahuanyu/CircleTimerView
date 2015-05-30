@@ -5,11 +5,12 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.jiahuan.circletimerview.CircleTimerView;
 
 
-public class MainActivity extends ActionBarActivity
+public class MainActivity extends ActionBarActivity implements CircleTimerView.CircleTimerListener
 {
 
     CircleTimerView timer;
@@ -20,6 +21,7 @@ public class MainActivity extends ActionBarActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         timer = (CircleTimerView) findViewById(R.id.ctv);
+        timer.setCircleTimerListener(this);
     }
 
     @Override
@@ -52,8 +54,26 @@ public class MainActivity extends ActionBarActivity
         timer.startTimer();
     }
 
-    public void stop(View v)
+    public void pause(View v)
     {
-        timer.stopTimer();
+        timer.pauseTimer();
+    }
+
+    @Override
+    public void onTimerStop()
+    {
+        Toast.makeText(this, "onTimerStop", Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onTimerStart()
+    {
+        Toast.makeText(this, "onTimerStart", Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onTimerPause()
+    {
+        Toast.makeText(this, "onTimerPause", Toast.LENGTH_LONG).show();
     }
 }
