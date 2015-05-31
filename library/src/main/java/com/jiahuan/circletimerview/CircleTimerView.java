@@ -234,6 +234,7 @@ public class CircleTimerView extends View
     {
         currentTime = (int) (60 / (2 * Math.PI) * currentRadian * 60);
         // Assist lines
+//        canvas.drawColor(Color.RED);
         // canvas.drawLine(cx, 0, cx, getHeight(), new Paint());
         // canvas.drawLine(0, cy, getWidth(), cy, new Paint());
 
@@ -398,14 +399,14 @@ public class CircleTimerView extends View
         this.cx = width / 2;
         this.cy = height / 2;
         // Radius
-        if (lineLength / 2 + gapBetweenCircleAndLine + circleStorkeWidth >= circleButtonRadius)
+        if (lineLength / 2 + gapBetweenCircleAndLine + circleStorkeWidth >= (circleButtonRadius + shadowRadius))
         {
             this.radius = width / 2 - circleStorkeWidth / 2;
             Log.d(TAG, "No exceed");
         }
         else
         {
-            this.radius = width / 2 - circleButtonRadius;
+            this.radius = width / 2 - (circleButtonRadius + shadowRadius - gapBetweenCircleAndLine - lineLength / 2 - circleStorkeWidth / 2);
             Log.d(TAG, "Exceed");
         }
         setMeasuredDimension(width, height);
