@@ -66,13 +66,13 @@ public class MainActivity extends ActionBarActivity implements CircleTimerView.C
     }
 
     @Override
-    public void onTimerStart()
+    public void onTimerStart(int currentTime)
     {
         Toast.makeText(this, "onTimerStart", Toast.LENGTH_LONG).show();
     }
 
     @Override
-    public void onTimerPause()
+    public void onTimerPause(int currentTime)
     {
         Toast.makeText(this, "onTimerPause", Toast.LENGTH_LONG).show();
     }

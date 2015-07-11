@@ -463,7 +463,7 @@ public class CircleTimerView extends View
             isStartTimer = true;
             if (this.circleTimerListener != null)
             {
-                this.circleTimerListener.onTimerStart();
+                this.circleTimerListener.onTimerStart(currentTime);
             }
         }
     }
@@ -477,7 +477,7 @@ public class CircleTimerView extends View
             isStartTimer = false;
             if (this.circleTimerListener != null)
             {
-                this.circleTimerListener.onTimerPause();
+                this.circleTimerListener.onTimerPause(currentTime);
             }
         }
     }
@@ -492,8 +492,13 @@ public class CircleTimerView extends View
     {
         void onTimerStop();
 
-        void onTimerStart();
+        void onTimerStart(int time);
 
-        void onTimerPause();
+        void onTimerPause(int time);
+    }
+
+    public int getCurrentTime()
+    {
+        return currentTime;
     }
 }
