@@ -113,10 +113,12 @@ public class CircleTimerView extends View
             if (currentRadian > 0 && currentTime > 0)
             {
                 currentRadian -= (2 * Math.PI) / 3600;
+                currentTime--;
             }
             else
             {
                 currentRadian = 0;
+                currentTime = 0;
                 timer.cancel();
                 isStartTimer = false;
                 if (circleTimerListener != null)
@@ -151,20 +153,34 @@ public class CircleTimerView extends View
     {
         Log.d(TAG, "initialize");
         // Set default dimension or read xml attributes
-        gapBetweenCircleAndLine = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, DEFAULT_GAP_BETWEEN_CIRCLE_AND_LINE, getContext().getResources().getDisplayMetrics());
-        gapBetweenNumberAndLine = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, DEFAULT_GAP_BETWEEN_NUMBER_AND_LINE, getContext().getResources().getDisplayMetrics());
-        numberSize = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, DEFAULT_NUMBER_SIZE, getContext().getResources().getDisplayMetrics());
-        lineLength = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, DEFAULT_LINE_LENGTH, getContext().getResources().getDisplayMetrics());
-        longerLineLength = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, DEFAULT_LONGER_LINE_LENGTH, getContext().getResources().getDisplayMetrics());
-        lineWidth = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, DEFAULT_LINE_WIDTH, getContext().getResources().getDisplayMetrics());
-        circleButtonRadius = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, DEFAULT_CIRCLE_BUTTON_RADIUS, getContext().getResources().getDisplayMetrics());
-        circleStorkeWidth = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, DEFAULT_CIRCLE_STROKE_WIDTH, getContext().getResources().getDisplayMetrics());
-        shadowRadius = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, DEFAULT_CIRCLE_BUTTON_SHADOW_RADIUS, getContext().getResources().getDisplayMetrics());
-        shadowXOffset = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, DEFAULT_CIRCLE_BUTTON_SHADOW_X_OFFSET, getContext().getResources().getDisplayMetrics());
-        shadowYOffset = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, DEFAULT_CIRCLE_BUTTON_SHADOW_Y_OFFSET, getContext().getResources().getDisplayMetrics());
-        timerNumberSize = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, DEFAULT_TIMER_NUMBER_SIZE, getContext().getResources().getDisplayMetrics());
-        timerTextSize = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, DEFAULT_TIMER_TEXT_SIZE, getContext().getResources().getDisplayMetrics());
-        gapBetweenTimerNumberAndText = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, DEFAULT_GAP_BETWEEN_TIMER_NUMBER_AND_TEXT, getContext().getResources().getDisplayMetrics());
+        gapBetweenCircleAndLine = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, DEFAULT_GAP_BETWEEN_CIRCLE_AND_LINE,
+                getContext().getResources().getDisplayMetrics());
+        gapBetweenNumberAndLine = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, DEFAULT_GAP_BETWEEN_NUMBER_AND_LINE,
+                getContext().getResources().getDisplayMetrics());
+        numberSize = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, DEFAULT_NUMBER_SIZE, getContext().getResources()
+                .getDisplayMetrics());
+        lineLength = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, DEFAULT_LINE_LENGTH, getContext().getResources()
+                .getDisplayMetrics());
+        longerLineLength = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, DEFAULT_LONGER_LINE_LENGTH, getContext()
+                .getResources().getDisplayMetrics());
+        lineWidth = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, DEFAULT_LINE_WIDTH, getContext().getResources()
+                .getDisplayMetrics());
+        circleButtonRadius = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, DEFAULT_CIRCLE_BUTTON_RADIUS, getContext()
+                .getResources().getDisplayMetrics());
+        circleStorkeWidth = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, DEFAULT_CIRCLE_STROKE_WIDTH, getContext()
+                .getResources().getDisplayMetrics());
+        shadowRadius = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, DEFAULT_CIRCLE_BUTTON_SHADOW_RADIUS, getContext()
+                .getResources().getDisplayMetrics());
+        shadowXOffset = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, DEFAULT_CIRCLE_BUTTON_SHADOW_X_OFFSET,
+                getContext().getResources().getDisplayMetrics());
+        shadowYOffset = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, DEFAULT_CIRCLE_BUTTON_SHADOW_Y_OFFSET,
+                getContext().getResources().getDisplayMetrics());
+        timerNumberSize = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, DEFAULT_TIMER_NUMBER_SIZE, getContext()
+                .getResources().getDisplayMetrics());
+        timerTextSize = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, DEFAULT_TIMER_TEXT_SIZE, getContext()
+                .getResources().getDisplayMetrics());
+        gapBetweenTimerNumberAndText = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
+                DEFAULT_GAP_BETWEEN_TIMER_NUMBER_AND_TEXT, getContext().getResources().getDisplayMetrics());
 
         // Set default color or read xml attributes
         circleColor = DEFAULT_CIRCLE_COLOR;
@@ -232,7 +248,6 @@ public class CircleTimerView extends View
     @Override
     protected void onDraw(Canvas canvas)
     {
-        currentTime = (int) (60 / (2 * Math.PI) * currentRadian * 60);
         // Assist lines
 //        canvas.drawColor(Color.RED);
         // canvas.drawLine(cx, 0, cx, getHeight(), new Paint());
@@ -249,22 +264,30 @@ public class CircleTimerView extends View
             {
                 if (360 / 120 * i <= Math.toDegrees(currentRadian))
                 {
-                    canvas.drawLine(cx, getMeasuredHeight() / 2 - radius + circleStorkeWidth / 2 + gapBetweenCircleAndLine, cx, getMeasuredHeight() / 2 - radius + circleStorkeWidth / 2 + gapBetweenCircleAndLine + longerLineLength, highlightLinePaint);
+                    canvas.drawLine(cx, getMeasuredHeight() / 2 - radius + circleStorkeWidth / 2 + gapBetweenCircleAndLine, cx,
+                            getMeasuredHeight() / 2 - radius + circleStorkeWidth / 2 + gapBetweenCircleAndLine +
+                                    longerLineLength, highlightLinePaint);
                 }
                 else
                 {
-                    canvas.drawLine(cx, getMeasuredHeight() / 2 - radius + circleStorkeWidth / 2 + gapBetweenCircleAndLine, cx, getMeasuredHeight() / 2 - radius + circleStorkeWidth / 2 + gapBetweenCircleAndLine + longerLineLength, linePaint);
+                    canvas.drawLine(cx, getMeasuredHeight() / 2 - radius + circleStorkeWidth / 2 + gapBetweenCircleAndLine, cx,
+                            getMeasuredHeight() / 2 - radius + circleStorkeWidth / 2 + gapBetweenCircleAndLine +
+                                    longerLineLength, linePaint);
                 }
             }
             else
             {
                 if (360 / 120 * i <= Math.toDegrees(currentRadian))
                 {
-                    canvas.drawLine(cx, getMeasuredHeight() / 2 - radius + circleStorkeWidth / 2 + gapBetweenCircleAndLine, cx, getMeasuredHeight() / 2 - radius + circleStorkeWidth / 2 + gapBetweenCircleAndLine + lineLength, highlightLinePaint);
+                    canvas.drawLine(cx, getMeasuredHeight() / 2 - radius + circleStorkeWidth / 2 + gapBetweenCircleAndLine, cx,
+                            getMeasuredHeight() / 2 - radius + circleStorkeWidth / 2 + gapBetweenCircleAndLine + lineLength,
+                            highlightLinePaint);
                 }
                 else
                 {
-                    canvas.drawLine(cx, getMeasuredHeight() / 2 - radius + circleStorkeWidth / 2 + gapBetweenCircleAndLine, cx, getMeasuredHeight() / 2 - radius + circleStorkeWidth / 2 + gapBetweenCircleAndLine + lineLength, linePaint);
+                    canvas.drawLine(cx, getMeasuredHeight() / 2 - radius + circleStorkeWidth / 2 + gapBetweenCircleAndLine, cx,
+                            getMeasuredHeight() / 2 - radius + circleStorkeWidth / 2 + gapBetweenCircleAndLine + lineLength,
+                            linePaint);
                 }
             }
             canvas.restore();
@@ -272,23 +295,30 @@ public class CircleTimerView extends View
         canvas.restore();
         // Number it is rubbish code
         float textLength = numberPaint.measureText("15");
-        canvas.drawText("60", cx, getMeasuredHeight() / 2 - radius + circleStorkeWidth / 2 + gapBetweenCircleAndLine + longerLineLength + gapBetweenNumberAndLine + getFontHeight(numberPaint), numberPaint);
-        canvas.drawText("15", cx + radius - circleStorkeWidth / 2 - gapBetweenCircleAndLine - longerLineLength - textLength / 2 - gapBetweenNumberAndLine, cy + getFontHeight(numberPaint) / 2, numberPaint);
-        canvas.drawText("30", cx, getMeasuredHeight() / 2 + radius - circleStorkeWidth / 2 - gapBetweenCircleAndLine - longerLineLength - gapBetweenNumberAndLine, numberPaint);
-        canvas.drawText("45", getMeasuredHeight() / 2 - radius + circleStorkeWidth / 2 + gapBetweenCircleAndLine + longerLineLength + gapBetweenNumberAndLine + textLength / 2, cy + getFontHeight(numberPaint) / 2, numberPaint);
+        canvas.drawText("60", cx, getMeasuredHeight() / 2 - radius + circleStorkeWidth / 2 + gapBetweenCircleAndLine +
+                longerLineLength + gapBetweenNumberAndLine + getFontHeight(numberPaint), numberPaint);
+        canvas.drawText("15", cx + radius - circleStorkeWidth / 2 - gapBetweenCircleAndLine - longerLineLength - textLength / 2
+                - gapBetweenNumberAndLine, cy + getFontHeight(numberPaint) / 2, numberPaint);
+        canvas.drawText("30", cx, getMeasuredHeight() / 2 + radius - circleStorkeWidth / 2 - gapBetweenCircleAndLine -
+                longerLineLength - gapBetweenNumberAndLine, numberPaint);
+        canvas.drawText("45", getMeasuredHeight() / 2 - radius + circleStorkeWidth / 2 + gapBetweenCircleAndLine +
+                longerLineLength + gapBetweenNumberAndLine + textLength / 2, cy + getFontHeight(numberPaint) / 2, numberPaint);
         // Circle button
         canvas.save();
         canvas.rotate((float) Math.toDegrees(currentRadian), cx, cy);
-        canvas.drawCircle(cx, getMeasuredHeight() / 2 - radius + circleStorkeWidth / 2 + gapBetweenCircleAndLine + lineLength / 2, circleButtonRadius, circleButtonPaint);
+        canvas.drawCircle(cx, getMeasuredHeight() / 2 - radius + circleStorkeWidth / 2 + gapBetweenCircleAndLine + lineLength /
+                2, circleButtonRadius, circleButtonPaint);
         canvas.restore();
         // TimerNumber
         canvas.save();
-        canvas.drawText((currentTime / 60 < 10 ? "0" + currentTime / 60 : currentTime / 60) + " " + (currentTime % 60 < 10 ? "0" + currentTime % 60 : currentTime % 60), cx, cy + getFontHeight(timerNumberPaint) / 2, timerNumberPaint);
+        canvas.drawText((currentTime / 60 < 10 ? "0" + currentTime / 60 : currentTime / 60) + " " + (currentTime % 60 < 10 ?
+                "0" + currentTime % 60 : currentTime % 60), cx, cy + getFontHeight(timerNumberPaint) / 2, timerNumberPaint);
         canvas.drawText(":", cx, cy + getFontHeight(timerNumberPaint) / 2, timerColonPaint);
         canvas.restore();
         // Timer Text
         canvas.save();
-        canvas.drawText("时间设置", cx, cy + getFontHeight(timerNumberPaint) / 2 + gapBetweenTimerNumberAndText + getFontHeight(timerTextPaint) / 2, timerTextPaint);
+        canvas.drawText("时间设置", cx, cy + getFontHeight(timerNumberPaint) / 2 + gapBetweenTimerNumberAndText + getFontHeight
+                (timerTextPaint) / 2, timerTextPaint);
         canvas.restore();
         super.onDraw(canvas);
     }
@@ -309,7 +339,7 @@ public class CircleTimerView extends View
         {
             case MotionEvent.ACTION_DOWN:
                 // If the point in the circle button
-                if (isInCircleButton(event.getX(), event.getY()))
+                if (isInCircleButton(event.getX(), event.getY()) && isEnabled())
                 {
                     isInCircleButton = true;
                     preRadian = getRadian(event.getX(), event.getY());
@@ -317,7 +347,7 @@ public class CircleTimerView extends View
                 }
                 break;
             case MotionEvent.ACTION_MOVE:
-                if (isInCircleButton)
+                if (isInCircleButton && isEnabled())
                 {
                     float temp = getRadian(event.getX(), event.getY());
                     if (preRadian > Math.toRadians(270) && temp < Math.toRadians(90))
@@ -338,14 +368,18 @@ public class CircleTimerView extends View
                     {
                         currentRadian = 0;
                     }
-
+                    if (circleTimerListener != null)
+                        circleTimerListener.onTimerValueChange(getCurrentTime());
+                    currentTime = (int) (60 / (2 * Math.PI) * currentRadian * 60);
                     invalidate();
                 }
                 break;
             case MotionEvent.ACTION_UP:
-                if (isInCircleButton)
+                if (isInCircleButton && isEnabled())
                 {
                     isInCircleButton = false;
+                    if (circleTimerListener != null)
+                        circleTimerListener.onTimerValueChanged(getCurrentTime());
                 }
                 break;
         }
@@ -406,7 +440,8 @@ public class CircleTimerView extends View
         }
         else
         {
-            this.radius = width / 2 - (circleButtonRadius + shadowRadius - gapBetweenCircleAndLine - lineLength / 2 - circleStorkeWidth / 2);
+            this.radius = width / 2 - (circleButtonRadius + shadowRadius - gapBetweenCircleAndLine - lineLength / 2 -
+                    circleStorkeWidth / 2);
             Log.d(TAG, "Exceed");
         }
         setMeasuredDimension(width, height);
@@ -482,6 +517,17 @@ public class CircleTimerView extends View
         }
     }
 
+    // 设置当前时间
+    public void setCurrentTime(int time)
+    {
+        if (time >= 0 && time <= 3600)
+        {
+            currentTime = time;
+            this.currentRadian = (float) (time / 60.0f * 2 * Math.PI / 60);
+            invalidate();
+        }
+    }
+
     // Set timer listener
     public void setCircleTimerListener(CircleTimerListener circleTimerListener)
     {
@@ -495,6 +541,10 @@ public class CircleTimerView extends View
         void onTimerStart(int time);
 
         void onTimerPause(int time);
+
+        void onTimerValueChanged(int time);
+
+        void onTimerValueChange(int time);
     }
 
     public int getCurrentTime()
