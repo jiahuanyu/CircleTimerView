@@ -1,15 +1,15 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 22
-    buildToolsVersion "22.0.1"
+    compileSdkVersion project.compileSdkVersion as int
+    buildToolsVersion project.buildToolsVersion as String
 
     defaultConfig {
-        applicationId "com.jiahuan.circletimerview.sample"
-        minSdkVersion 8
-        targetSdkVersion 8
+        applicationId "com.jiahuan.github.circletimerview.sample"
+        minSdkVersion project.minSdkVersion as int
+        targetSdkVersion project.targetSdkVersion as int
         versionCode 1
-        versionName "1.0"
+        versionName "1.0.0"
     }
     buildTypes {
         release {

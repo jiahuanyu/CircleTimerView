@@ -2,6 +2,7 @@ package com.jiahuan.circletimerview.sample;
 
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -13,15 +14,17 @@ import com.jiahuan.circletimerview.CircleTimerView;
 public class MainActivity extends ActionBarActivity implements CircleTimerView.CircleTimerListener
 {
 
-    CircleTimerView timer;
+    private static final String TAG = MainActivity.class.getSimpleName();
+
+    private CircleTimerView mTimer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        timer = (CircleTimerView) findViewById(R.id.ctv);
-        timer.setCircleTimerListener(this);
+        mTimer = (CircleTimerView) findViewById(R.id.ctv);
+        mTimer.setCircleTimerListener(this);
     }
 
     @Override
@@ -51,12 +54,12 @@ public class MainActivity extends ActionBarActivity implements CircleTimerView.C
 
     public void start(View v)
     {
-        timer.startTimer();
+        mTimer.startTimer();
     }
 
     public void pause(View v)
     {
-        timer.pauseTimer();
+        mTimer.pauseTimer();
     }
 
     @Override
@@ -75,5 +78,17 @@ public class MainActivity extends ActionBarActivity implements CircleTimerView.C
     public void onTimerPause(int currentTime)
     {
         Toast.makeText(this, "onTimerPause", Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onTimerValueChanged(int time)
+    {
+        Log.d(TAG, "onTimerValueChanged");
+    }
+
+    @Override
+    public void onTimerValueChange(int time)
+    {
+        Log.d(TAG, "onTimerValueChange");
     }
 }
