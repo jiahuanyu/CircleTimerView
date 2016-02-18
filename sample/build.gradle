@@ -5,7 +5,7 @@ android {
     buildToolsVersion project.buildToolsVersion as String
 
     defaultConfig {
-        applicationId "com.jiahuan.github.circletimerview.sample"
+        applicationId "com.github.jiahuanyu.circletimerview.sample"
         minSdkVersion project.minSdkVersion as int
         targetSdkVersion project.targetSdkVersion as int
         versionCode 1
