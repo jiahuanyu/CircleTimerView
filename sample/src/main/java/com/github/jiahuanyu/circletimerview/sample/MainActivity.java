@@ -19,6 +19,7 @@ public class MainActivity extends ActionBarActivity implements CircleTimerView.C
 
     private CircleTimerView mTimer;
     private EditText mTimerSet;
+    private EditText mHintSet;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -28,6 +29,7 @@ public class MainActivity extends ActionBarActivity implements CircleTimerView.C
         mTimer = (CircleTimerView) findViewById(R.id.ctv);
         mTimer.setCircleTimerListener(this);
         mTimerSet = (EditText) findViewById(R.id.time_set_et);
+        mHintSet = (EditText) findViewById(R.id.hint_set_et);
     }
 
     @Override
@@ -65,6 +67,11 @@ public class MainActivity extends ActionBarActivity implements CircleTimerView.C
         {
             e.printStackTrace();
         }
+    }
+
+    public void setHint(View v)
+    {
+        mTimer.setHintText(mHintSet.getText().toString());
     }
 
     public void start(View v)
