@@ -3,30 +3,51 @@
                 android:layout_height="match_parent"
     >
 
-    <com.jiahuan.circletimerview.CircleTimerView
+    <com.github.jiahuanyu.circletimerview.CircleTimerView
         android:id="@+id/ctv"
         android:layout_width="300dp"
         android:layout_height="300dp"
         android:layout_centerInParent="true">
-    </com.jiahuan.circletimerview.CircleTimerView>
+    </com.github.jiahuanyu.circletimerview.CircleTimerView>
 
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="START TIMER"
-        android:onClick="start"/>
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:text="PAUSE TIMER"
-        android:onClick="pause"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="start"
+            android:text="START TIMER"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="pause"
+            android:text="PAUSE TIMER"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:onClick="setTime"
+            android:text="Set Time"/>
+
+        <EditText
+            android:id="@+id/time_set_et"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="0 ~ 3600"
+            android:text="60"
+            android:inputType="number"/>
+    </LinearLayout>
 
     <!--<Button-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_alignParentRight="true"-->
-        <!--android:text="STOP TIMER"-->
-        <!--android:onClick="stop"/>-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_alignParentRight="true"-->
+    <!--android:text="STOP TIMER"-->
+    <!--android:onClick="stop"/>-->
 </RelativeLayout>

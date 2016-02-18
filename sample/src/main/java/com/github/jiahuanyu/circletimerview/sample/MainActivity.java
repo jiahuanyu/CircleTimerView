@@ -1,4 +1,4 @@
-package com.jiahuan.circletimerview.sample;
+package com.github.jiahuanyu.circletimerview.sample;
 
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -6,9 +6,10 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.Toast;
 
-import com.jiahuan.circletimerview.CircleTimerView;
+import com.github.jiahuanyu.circletimerview.CircleTimerView;
 
 
 public class MainActivity extends ActionBarActivity implements CircleTimerView.CircleTimerListener
@@ -17,6 +18,7 @@ public class MainActivity extends ActionBarActivity implements CircleTimerView.C
     private static final String TAG = MainActivity.class.getSimpleName();
 
     private CircleTimerView mTimer;
+    private EditText mTimerSet;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -25,6 +27,7 @@ public class MainActivity extends ActionBarActivity implements CircleTimerView.C
         setContentView(R.layout.activity_main);
         mTimer = (CircleTimerView) findViewById(R.id.ctv);
         mTimer.setCircleTimerListener(this);
+        mTimerSet = (EditText) findViewById(R.id.time_set_et);
     }
 
     @Override
@@ -50,6 +53,18 @@ public class MainActivity extends ActionBarActivity implements CircleTimerView.C
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void setTime(View v)
+    {
+        try
+        {
+            mTimer.setCurrentTime(Integer.parseInt(mTimerSet.getText().toString()));
+        }
+        catch (NumberFormatException e)
+        {
+            e.printStackTrace();
+        }
     }
 
     public void start(View v)
@@ -81,14 +96,20 @@ public class MainActivity extends ActionBarActivity implements CircleTimerView.C
     }
 
     @Override
-    public void onTimerValueChanged(int time)
+    public void onTimerTimingValueChanged(int time)
     {
-        Log.d(TAG, "onTimerValueChanged");
+        Log.d(TAG, "onTimerTimingValueChanged");
     }
 
     @Override
-    public void onTimerValueChange(int time)
+    public void onTimerSetValueChanged(int time)
     {
-        Log.d(TAG, "onTimerValueChange");
+        Log.d(TAG, "onTimerSetValueChanged");
+    }
+
+    @Override
+    public void onTimerSetValueChange(int time)
+    {
+        Log.d(TAG, "onTimerSetValueChange");
     }
 }
