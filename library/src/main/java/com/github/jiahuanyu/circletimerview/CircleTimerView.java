@@ -1,4 +1,4 @@
-package com.jiahuan.circletimerview;
+package com.github.jiahuanyu.circletimerview;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -87,7 +87,7 @@ public class CircleTimerView extends View
     private float mCurrentRadian;
     private float mPreRadian;
     private boolean mInCircleButton;
-    private int currentTime; // seconds
+    private int mCurrentTime; // seconds
     private boolean mStarted;
 
     // TimerTask
@@ -102,20 +102,24 @@ public class CircleTimerView extends View
         {
             Log.d(TAG, "handleMessage");
             super.handleMessage(msg);
-            if (mCurrentRadian > 0 && currentTime > 0)
+            if (mCurrentRadian > 0 && mCurrentTime > 0)
             {
                 mCurrentRadian -= (2 * Math.PI) / 3600;
-                currentTime--;
+                mCurrentTime--;
+                if (mCircleTimerListener != null)
+                {
+                    mCircleTimerListener.onTimerTimingValueChanged(mCurrentTime);
+                }
             }
             else
             {
                 mCurrentRadian = 0;
-                currentTime = 0;
+                mCurrentTime = 0;
                 timer.cancel();
                 mStarted = false;
-                if (circleTimerListener != null)
+                if (mCircleTimerListener != null)
                 {
-                    circleTimerListener.onTimerStop();
+                    mCircleTimerListener.onTimerStop();
                 }
             }
             invalidate();
@@ -123,7 +127,7 @@ public class CircleTimerView extends View
     };
 
     // Runt
-    private CircleTimerListener circleTimerListener;
+    private CircleTimerListener mCircleTimerListener;
 
     public CircleTimerView(Context context, AttributeSet attrs, int defStyleAttr)
     {
@@ -236,7 +240,7 @@ public class CircleTimerView extends View
 //        canvas.drawColor(Color.RED);
         // canvas.drawLine(mCx, 0, mCx, getHeight(), new Paint());
         // canvas.drawLine(0, mCy, getWidth(), mCy, new Paint());
-
+        Log.d(TAG, "onDraw");
         // Content
         canvas.drawCircle(mCx, mCy, mRadius, mCirclePaint);
         canvas.save();
@@ -248,13 +252,15 @@ public class CircleTimerView extends View
             {
                 if (360 / 120 * i <= Math.toDegrees(mCurrentRadian))
                 {
-                    canvas.drawLine(mCx, getMeasuredHeight() / 2 - mRadius + mCircleStrokeWidth / 2 + mGapBetweenCircleAndLine, mCx,
+                    canvas.drawLine(mCx, getMeasuredHeight() / 2 - mRadius + mCircleStrokeWidth / 2 + mGapBetweenCircleAndLine,
+                            mCx,
                             getMeasuredHeight() / 2 - mRadius + mCircleStrokeWidth / 2 + mGapBetweenCircleAndLine +
                                     mLongerLineLength, mHighlightLinePaint);
                 }
                 else
                 {
-                    canvas.drawLine(mCx, getMeasuredHeight() / 2 - mRadius + mCircleStrokeWidth / 2 + mGapBetweenCircleAndLine, mCx,
+                    canvas.drawLine(mCx, getMeasuredHeight() / 2 - mRadius + mCircleStrokeWidth / 2 + mGapBetweenCircleAndLine,
+                            mCx,
                             getMeasuredHeight() / 2 - mRadius + mCircleStrokeWidth / 2 + mGapBetweenCircleAndLine +
                                     mLongerLineLength, mLinePaint);
                 }
@@ -263,13 +269,15 @@ public class CircleTimerView extends View
             {
                 if (360 / 120 * i <= Math.toDegrees(mCurrentRadian))
                 {
-                    canvas.drawLine(mCx, getMeasuredHeight() / 2 - mRadius + mCircleStrokeWidth / 2 + mGapBetweenCircleAndLine, mCx,
+                    canvas.drawLine(mCx, getMeasuredHeight() / 2 - mRadius + mCircleStrokeWidth / 2 + mGapBetweenCircleAndLine,
+                            mCx,
                             getMeasuredHeight() / 2 - mRadius + mCircleStrokeWidth / 2 + mGapBetweenCircleAndLine + mLineLength,
                             mHighlightLinePaint);
                 }
                 else
                 {
-                    canvas.drawLine(mCx, getMeasuredHeight() / 2 - mRadius + mCircleStrokeWidth / 2 + mGapBetweenCircleAndLine, mCx,
+                    canvas.drawLine(mCx, getMeasuredHeight() / 2 - mRadius + mCircleStrokeWidth / 2 + mGapBetweenCircleAndLine,
+                            mCx,
                             getMeasuredHeight() / 2 - mRadius + mCircleStrokeWidth / 2 + mGapBetweenCircleAndLine + mLineLength,
                             mLinePaint);
                 }
@@ -281,23 +289,25 @@ public class CircleTimerView extends View
         float textLength = mNumberPaint.measureText("15");
         canvas.drawText("60", mCx, getMeasuredHeight() / 2 - mRadius + mCircleStrokeWidth / 2 + mGapBetweenCircleAndLine +
                 mLongerLineLength + mGapBetweenNumberAndLine + getFontHeight(mNumberPaint), mNumberPaint);
-        canvas.drawText("15", mCx + mRadius - mCircleStrokeWidth / 2 - mGapBetweenCircleAndLine - mLongerLineLength - textLength / 2
+        canvas.drawText("15", mCx + mRadius - mCircleStrokeWidth / 2 - mGapBetweenCircleAndLine - mLongerLineLength -
+                textLength / 2
                 - mGapBetweenNumberAndLine, mCy + getFontHeight(mNumberPaint) / 2, mNumberPaint);
         canvas.drawText("30", mCx, getMeasuredHeight() / 2 + mRadius - mCircleStrokeWidth / 2 - mGapBetweenCircleAndLine -
                 mLongerLineLength - mGapBetweenNumberAndLine, mNumberPaint);
         canvas.drawText("45", getMeasuredHeight() / 2 - mRadius + mCircleStrokeWidth / 2 + mGapBetweenCircleAndLine +
-                mLongerLineLength + mGapBetweenNumberAndLine + textLength / 2, mCy + getFontHeight(mNumberPaint) / 2,
+                        mLongerLineLength + mGapBetweenNumberAndLine + textLength / 2, mCy + getFontHeight(mNumberPaint) / 2,
                 mNumberPaint);
         // Circle button
         canvas.save();
         canvas.rotate((float) Math.toDegrees(mCurrentRadian), mCx, mCy);
-        canvas.drawCircle(mCx, getMeasuredHeight() / 2 - mRadius + mCircleStrokeWidth / 2 + mGapBetweenCircleAndLine + mLineLength /
-                2, mCircleButtonRadius, mCircleButtonPaint);
+        canvas.drawCircle(mCx, getMeasuredHeight() / 2 - mRadius + mCircleStrokeWidth / 2 + mGapBetweenCircleAndLine +
+                mLineLength /
+                        2, mCircleButtonRadius, mCircleButtonPaint);
         canvas.restore();
         // TimerNumber
         canvas.save();
-        canvas.drawText((currentTime / 60 < 10 ? "0" + currentTime / 60 : currentTime / 60) + " " + (currentTime % 60 < 10 ?
-                "0" + currentTime % 60 : currentTime % 60), mCx, mCy + getFontHeight(mTimerNumberPaint) / 2, mTimerNumberPaint);
+        canvas.drawText((mCurrentTime / 60 < 10 ? "0" + mCurrentTime / 60 : mCurrentTime / 60) + " " + (mCurrentTime % 60 < 10 ?
+                "0" + mCurrentTime % 60 : mCurrentTime % 60), mCx, mCy + getFontHeight(mTimerNumberPaint) / 2, mTimerNumberPaint);
         canvas.drawText(":", mCx, mCy + getFontHeight(mTimerNumberPaint) / 2, mTimerColonPaint);
         canvas.restore();
         // Timer Text
@@ -353,9 +363,9 @@ public class CircleTimerView extends View
                     {
                         mCurrentRadian = 0;
                     }
-                    if (circleTimerListener != null)
-                        circleTimerListener.onTimerValueChange(getCurrentTime());
-                    currentTime = (int) (60 / (2 * Math.PI) * mCurrentRadian * 60);
+                    if (mCircleTimerListener != null)
+                        mCircleTimerListener.onTimerSetValueChange(getCurrentTime());
+                    mCurrentTime = (int) (60 / (2 * Math.PI) * mCurrentRadian * 60);
                     invalidate();
                 }
                 break;
@@ -363,8 +373,8 @@ public class CircleTimerView extends View
                 if (mInCircleButton && isEnabled())
                 {
                     mInCircleButton = false;
-                    if (circleTimerListener != null)
-                        circleTimerListener.onTimerValueChanged(getCurrentTime());
+                    if (mCircleTimerListener != null)
+                        mCircleTimerListener.onTimerSetValueChanged(getCurrentTime());
                 }
                 break;
         }
@@ -451,7 +461,7 @@ public class CircleTimerView extends View
             Bundle bundle = (Bundle) state;
             super.onRestoreInstanceState(bundle.getParcelable(INSTANCE_STATUS));
             mCurrentRadian = bundle.getFloat(STATUS_RADIAN);
-            currentTime = (int) (60 / (2 * Math.PI) * mCurrentRadian * 60);
+            mCurrentTime = (int) (60 / (2 * Math.PI) * mCurrentRadian * 60);
             return;
         }
         super.onRestoreInstanceState(state);
@@ -482,9 +492,9 @@ public class CircleTimerView extends View
             };
             timer.schedule(timerTask, 1000, 1000);
             mStarted = true;
-            if (this.circleTimerListener != null)
+            if (this.mCircleTimerListener != null)
             {
-                this.circleTimerListener.onTimerStart(currentTime);
+                this.mCircleTimerListener.onTimerStart(mCurrentTime);
             }
         }
     }
@@ -498,9 +508,9 @@ public class CircleTimerView extends View
         {
             timerTask.cancel();
             mStarted = false;
-            if (this.circleTimerListener != null)
+            if (this.mCircleTimerListener != null)
             {
-                this.circleTimerListener.onTimerPause(currentTime);
+                this.mCircleTimerListener.onTimerPause(mCurrentTime);
             }
         }
     }
@@ -514,7 +524,11 @@ public class CircleTimerView extends View
     {
         if (time >= 0 && time <= 3600)
         {
-            currentTime = time;
+            mCurrentTime = time;
+            if (mCircleTimerListener != null)
+            {
+                mCircleTimerListener.onTimerSetValueChanged(time);
+            }
             this.mCurrentRadian = (float) (time / 60.0f * 2 * Math.PI / 60);
             invalidate();
         }
@@ -523,11 +537,11 @@ public class CircleTimerView extends View
     /**
      * set timer listener
      *
-     * @param circleTimerListener
+     * @param mCircleTimerListener
      */
-    public void setCircleTimerListener(CircleTimerListener circleTimerListener)
+    public void setCircleTimerListener(CircleTimerListener mCircleTimerListener)
     {
-        this.circleTimerListener = circleTimerListener;
+        this.mCircleTimerListener = mCircleTimerListener;
     }
 
     /**
@@ -537,7 +551,7 @@ public class CircleTimerView extends View
      */
     public int getCurrentTime()
     {
-        return currentTime;
+        return mCurrentTime;
     }
 
 
@@ -562,20 +576,28 @@ public class CircleTimerView extends View
          */
         void onTimerPause(int time);
 
+
         /**
-         * launch timer value changed event
+         * launch timer timing value changed event
          *
          * @param time
          */
-        void onTimerValueChanged(int time);
-
+        void onTimerTimingValueChanged(int time);
 
         /**
-         * launch timer value chang event
+         * launch timer set value changed event
          *
          * @param time
          */
-        void onTimerValueChange(int time);
+        void onTimerSetValueChanged(int time);
+
+
+        /**
+         * launch timer set value chang event
+         *
+         * @param time
+         */
+        void onTimerSetValueChange(int time);
     }
 
 }
