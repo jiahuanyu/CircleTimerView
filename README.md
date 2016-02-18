@@ -11,12 +11,12 @@ Developed by AndroidStudio
 
 ## Usage
 ```xml
-<com.jiahuan.circletimerview.CircleTimerView
+<com.github.jiahuanyu.circletimerview.CircleTimerView
     android:id="@+id/ctv"
     android:layout_width="300dp"
     android:layout_height="300dp"
     android:layout_centerInParent="true">
-</com.jiahuan.circletimerview.CircleTimerView>
+</com.github.jiahuanyu.circletimerview.CircleTimerView>
 ```
 Ensure the height equals to the width
 
@@ -27,7 +27,7 @@ setLayerType(View.LAYER_TYPE_SOFTWARE, null);
 ```
 
 ## License
-Copyright 2015 JiaHuan
+Copyright 2015 Jiahuan
 
 Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at
 
