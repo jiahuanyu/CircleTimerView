@@ -89,6 +89,7 @@ public class CircleTimerView extends View
     private boolean mInCircleButton;
     private int mCurrentTime; // seconds
     private boolean mStarted;
+    private String mHintText;
 
     // TimerTask
     private Timer timer = new Timer();
@@ -229,6 +230,7 @@ public class CircleTimerView extends View
         mTimerColonPaint.setTextAlign(Paint.Align.CENTER);
         mTimerColonPaint.setTextSize(mTimerNumberSize);
 
+        mHintText = "时间设置";
         // Solve the target version related to shadow
         // setLayerType(View.LAYER_TYPE_SOFTWARE, null); // use this, when targetSdkVersion is greater than or equal to api 14
     }
@@ -312,7 +314,7 @@ public class CircleTimerView extends View
         canvas.restore();
         // Timer Text
         canvas.save();
-        canvas.drawText("时间设置", mCx, mCy + getFontHeight(mTimerNumberPaint) / 2 + mGapBetweenTimerNumberAndText + getFontHeight
+        canvas.drawText(mHintText, mCx, mCy + getFontHeight(mTimerNumberPaint) / 2 + mGapBetweenTimerNumberAndText + getFontHeight
                 (mTimerTextPaint) / 2, mTimerTextPaint);
         canvas.restore();
         super.onDraw(canvas);
@@ -532,6 +534,34 @@ public class CircleTimerView extends View
             this.mCurrentRadian = (float) (time / 60.0f * 2 * Math.PI / 60);
             invalidate();
         }
+    }
+
+    /**
+     * set the hint text, default is 时间设置
+     *
+     * @param id int id value
+     */
+    public void setHintText(int id)
+    {
+        if (id > 0)
+        {
+            setHintText(getResources().getString(id));
+        }
+    }
+
+
+    /**
+     * set the hint text, default is 时间设置
+     *
+     * @param value String value
+     */
+    public void setHintText(String value)
+    {
+        if (value != null)
+        {
+            mHintText = value;
+        }
+        invalidate();
     }
 
     /**
