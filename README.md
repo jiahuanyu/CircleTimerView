@@ -18,9 +18,6 @@ Developed by AndroidStudio
     android:layout_centerInParent="true">
 </com.github.jiahuanyu.circletimerview.CircleTimerView>
 ```
-Ensure the height equals to the width
-
-## How to use
 See the sample
 
 ## Notice
