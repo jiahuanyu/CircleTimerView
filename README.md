@@ -1,4 +1,4 @@
-# CircleTimerView
+# CircleTimerView  [No Longer Support]
 Circle timer on Android platform. <br />
 <img src="./images/sample.gif" width="200px" height="auto" />
 <img src="./images/sample2.gif" width="200px" height="auto" />
